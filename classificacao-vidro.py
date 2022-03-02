@@ -16,7 +16,8 @@ df = pd.read_csv('./data/glass.csv')
 logo_image = 'https://assets5.lottiefiles.com/packages/lf20_mkppywz7.json'
 options_image = dict(loop=True, autoplay=True, rendererSettings=dict(preserveAspectRatio='xMidYMid slice'))
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
+app = Dash(__name__, external_stylesheets=[dbc.themes.MATERIA],
+            meta_tags=[{'name': 'viewport', 'content': 'width=device-width,initial-scale=1.0'}])
 server = app.server
 #FAVORITES: ZEPHYR VAPOR UNITED SPACELAB* SKETCHY**  PULSE MINTY LUX MATERIA***
 app.layout = dbc.Container([
@@ -61,7 +62,7 @@ app.layout = dbc.Container([
                         dbc.Row([
                             dbc.Col([
                                 html.Ul([
-html.Li('RI - Índice de Refração;'),
+                html.Li('RI - Índice de Refração;'),
                             html.Li('Na - Sódio;'),
                             html.Li('Mg - Magnésio;'),
                             html.Li('Al - Alumínio;'),
@@ -69,7 +70,7 @@ html.Li('RI - Índice de Refração;'),
                                 ]),
                             ]),
                             dbc.Col([html.Ul([
-html.Li('K - Potássio;'),
+             html.Li('K - Potássio;'),
                             html.Li('Ca - Cálcio;'),
                             html.Li('Ba - Bário;'),
                             html.Li('Fe - Ferro.'),
@@ -157,7 +158,7 @@ html.Li('K - Potássio;'),
             ]),
                 ],
                 align='top',
-                width=5,
+                xxl=5, xl=5, lg=5, md=10, sm=10, xs=10,
                 className='mt-3',
             ),
             dbc.Col(
@@ -254,10 +255,11 @@ html.Li('K - Potássio;'),
                 ],
                 className='justify-content-center mt-3',
                 align='top',
-                width={'size':7},
+                xxl=7, xl=7, lg=7, md=10, sm=10, xs=10,
                 style={'color':'#000000'}
             ),
-        ]
+        ],
+        justify='center',
     ),
 ],fluid=True)
 
