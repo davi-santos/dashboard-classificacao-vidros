@@ -1,0 +1,4 @@
+#Now I won't add more features, all I will do is:
+    * Load all data and figures first;
+    * So, in callbacks it will only call the figures created (static ones)
+    * Clean code spaces
