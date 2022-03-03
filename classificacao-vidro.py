@@ -76,19 +76,6 @@ app.layout = dbc.Container([
                             html.Li('Fe - Ferro.'),
                             ])])
                         ]),
-                       
-                        # html.Ul([
-                        #     html.Li('RI - Índice de Refração;'),
-                        #     html.Li('Na - Sódio;'),
-                        #     html.Li('Mg - Magnésio;'),
-                        #     html.Li('Al - Alumínio;'),
-                        #     html.Li('Si - Silício;'),
-                        #     html.Li('K - Potássio;'),
-                        #     html.Li('Ca - Cálcio;'),
-                        #     html.Li('Ba - Bário;'),
-                        #     html.Li('Fe - Ferro.'),
-                        # ],
-                        #className='ml-5 text-justify')
                     ], 
                     body=True,
                     className='bg-light'
@@ -158,7 +145,7 @@ app.layout = dbc.Container([
             ]),
                 ],
                 align='top',
-                xxl=5, xl=5, lg=5, md=10, sm=10, xs=10,
+                xxl=5, xl=5, lg=5, md=12, sm=12, xs=12,
                 className='mt-3',
             ),
             dbc.Col(
@@ -195,55 +182,55 @@ app.layout = dbc.Container([
                                               dbc.Col([
                                                    dbc.Label("Índice de Refração", html_for="slider",),
                                                     dcc.Slider(id="RI", min=1.510, max=1.533, step=0.006, value=1.516),
-                                              ], width=4),
+                                              ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=12,),
                                               dbc.Col([
                                                    dbc.Label("Sódio", html_for="slider"),
                                                     dcc.Slider(id="Na", min=10.7, max=17.4, step=1.4, value=12.1),
-                                              ], width=4),
+                                              ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=12,),
                                               dbc.Col([
                                                    dbc.Label("Magnésio", html_for="slider"),
                                                     dcc.Slider(id="Mg", min=0, max=4.5, step=0.75, value=0.75),
-                                              ], width=4)
-                                          ], className='text-center'),
-                                          dbc.Row([
+                                              ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=12,),
+                                         #], className='text-center'),
+                                          #dbc.Row([
                                               dbc.Col([
                                                    dbc.Label("Alumínio", html_for="slider"),
                                                     dcc.Slider(id="Al", min=0, max=4, step=0.7, value=0.7),
-                                              ], width=4),
+                                              ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=12,),
                                               dbc.Col([
                                                    dbc.Label("Silício", html_for="slider"),
                                                     dcc.Slider(id="Si", min=68, max=76, step=1, value=69),
-                                              ], width=4),
+                                              ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=12,),
                                               dbc.Col([
                                                    dbc.Label("Potássio", html_for="slider"),
                                                     dcc.Slider(id="K", min=0, max=6.5, step=1.25, value=1.25),
-                                              ], width=4)
-                                          ], className='text-center'),
-                                          dbc.Row([
+                                              ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=12,),
+                                          #], className='text-center'),
+                                          #dbc.Row([
                                               dbc.Col([
                                                 dbc.Label("Cálcio", html_for="slider"),
                                                 dcc.Slider(id="Ca", min=5.4, max=16.2, step=2, value=7.4),
-                                              ], width=4),
+                                              ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=12,),
                                               dbc.Col([
                                                    dbc.Label("Bário", html_for="slider"),
                                                     dcc.Slider(id="Ba", min=0, max=3.2, step=0.8, value=0.8),
-                                              ], width=4),
+                                              ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=12,),
                                               dbc.Col([
                                                    dbc.Label("Ferro", html_for="slider"),
                                                     dcc.Slider(id="Fe", min=0, max=0.6, step=0.1, value=0.1),
-                                              ], width=4),
+                                              ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=12,),
                                           ], className='text-center', justify='center'),
                                             dbc.Row([
                                                 dbc.Col([
                                                     dbc.Button("Fazer Predição", id='result-button',color="secondary", n_clicks=0)
-                                                ], width=3),
+                                                ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=6,),
                                                 dbc.Col([
                                                     dbc.Card([
                                                         html.H4('Resultado: ', id='result')
                                                     ],
                                                     className='bg-dark text-light text-center font-weight-lighter',
                                                     ),
-                                                ], width=4),
+                                                ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=6,),
                                             ], justify='center', align='center', className='mt-4'),
                                         ], className='')
                                     ]
@@ -255,7 +242,7 @@ app.layout = dbc.Container([
                 ],
                 className='justify-content-center mt-3',
                 align='top',
-                xxl=7, xl=7, lg=7, md=10, sm=10, xs=10,
+                xxl=7, xl=7, lg=7, md=12, sm=12, xs=12,
                 style={'color':'#000000'}
             ),
         ],
