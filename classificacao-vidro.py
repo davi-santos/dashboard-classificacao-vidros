@@ -6,13 +6,32 @@ import pandas as pd
 from dash_extensions import Lottie
 import joblib
 
-#Loading files
-df = pd.read_csv('./data/glass.csv')
-trained_model = joblib.load('./models/DecisionTree.joblib')
+FIGURE_PIE = 1
+FIGURE_BARPLOT = 2
+FIGURE_HEATMAP = 3
+FIGURE_MODEL_ATRIBUTE = 4
+
+# Files
+glass_dataframe = pd.read_csv('./data/glass.csv')
+trained_model = joblib.load('./models/Random_Forest.joblib')
+
+# Figures
+figure_pie = px.pie(glass_dataframe, values='Type',names='Type', title='Categorias de Vidro')
+
+glass_dataframe_type = glass_dataframe['Type'].value_counts()
+figure_barplot = px.bar(glass_dataframe_type, y='Type', title='Quantidade de Vidro por Categoria', 
+                labels={'index':'Tipo de vidro', 'variable':'variável', 'Type':'Quantidade'})
+
+matrix_correlation = glass_dataframe.drop('Type', axis=1).corr().apply(lambda x: round(x, 2))
+figure_heatmap = px.imshow(matrix_correlation, title='Correlação entre os atributos', aspect='auto', text_auto=True)
+
+feature_importance_dataframe = pd.DataFrame(trained_model.feature_importances_, index=glass_dataframe.columns.values[0:-1])
+figure_model_atribute = px.bar(feature_importance_dataframe[0],  title='Importância dos atributos segundo o modelo', 
+                labels={'index':'Atributos', 'value':'Valor'})
 
 #Config logo picture
-logo_image = 'https://assets5.lottiefiles.com/packages/lf20_mkppywz7.json'
-options_image = dict(loop=True, autoplay=True, rendererSettings=dict(preserveAspectRatio='xMidYMid slice'))
+logo_image_icon = 'https://assets5.lottiefiles.com/packages/lf20_mkppywz7.json'
+options_image_icon = dict(loop=True, autoplay=True, rendererSettings=dict(preserveAspectRatio='xMidYMid slice'))
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.MATERIA],
             meta_tags=[{'name': 'viewport', 'content': 'width=device-width,initial-scale=1.0'}])
@@ -26,7 +45,7 @@ app.layout = dbc.Container([
                 dbc.CardBody([
                     html.Div([
                         html.H1('Classificador de Vidros',style={'text-align':'center'}),
-                        Lottie(options=options_image, width="30%", height="30%", url=logo_image),
+                        Lottie(options=options_image_icon, width="30%", height="30%", url=logo_image_icon),
                     ]),
                 ], className='bg-light'),
             ]),
@@ -106,7 +125,7 @@ app.layout = dbc.Container([
                                 html.H5('Artigo do trabalho: ')
                             ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=6,),
                             dbc.Col([
-                                html.A('Medium', href='#', style={'color':'green'})
+                                html.A('Medium', href='https://medium.com/@uft.davi/classifica%C3%A7%C3%A3o-de-vidros-com-python-d0895c799719', target='_blank', style={'color':'green'})
                             ], xxl=4, xl=4, lg=4, md=4, sm=6, xs=6,)
                         ], justify='center'),
                         dbc.Row([
@@ -136,11 +155,11 @@ app.layout = dbc.Container([
                     html.H4('Opções Gráficas:', className=''),
                         dbc.RadioItems(
                             options=[
-                            {"label": "Gráfico em Pizza", "value": 1},
-                            {"label": "Gráfico de Barras", "value": 2},
-                            {"label": "Mapa de Calor", "value": 3},
-                            {"label": "Importância de Atributos do Modelo", "value": 4},],
-                            value=1, id="graphic-option", inline=True,),
+                            {"label": "Gráfico em Pizza", "value": FIGURE_PIE},
+                            {"label": "Gráfico de Barras", "value": FIGURE_BARPLOT},
+                            {"label": "Mapa de Calor", "value": FIGURE_HEATMAP},
+                            {"label": "Importância de Atributos do Modelo", "value": FIGURE_MODEL_ATRIBUTE}],
+                            value=1, id="graphic-option", inline=True),
                     ], className='bg-dark text-light'
                 )
             ),
@@ -218,23 +237,17 @@ app.layout = dbc.Container([
     Output('first-image', 'figure'),
     Input('graphic-option', 'value')
 )
-def image_top(option):
+def display_figure(option):
     
     fig = {}
-    if option==1:
-        fig = px.pie(df, values='Type',names='Type', title='Categorias de Vidro',)
-    elif option==2:
-        df_auxiliar = df['Type'].value_counts()
-        fig = px.bar(df_auxiliar, y='Type', title='Quantidade de Vidro por Categoria', labels={'index':'Tipo de vidro', 'variable':'variável', 'Type':'Quantidade'})
-    elif option==3:
-        matrix_corr = df.drop('Type', axis=1).corr()
-        matrix_corr = matrix_corr.apply(lambda x: round(x, 2))
-        fig = px.imshow(matrix_corr, title='Correlação entre os atributos', aspect='auto', text_auto=True)
-    elif option==4:
-        dt = joblib.load('./models/DecisionTree.joblib')
-        df_decisionTree = pd.DataFrame(dt.feature_importances_, index=df.columns.values[0:-1])
-
-        fig = px.bar(df_decisionTree[0],  title='Importância dos atributos segundo o modelo', labels={'index':'Atributos', 'value':'Valor'})
+    if option==FIGURE_PIE:
+        fig = figure_pie
+    elif option==FIGURE_BARPLOT:
+        fig = figure_barplot
+    elif option==FIGURE_HEATMAP:
+        fig = figure_heatmap
+    elif option==FIGURE_MODEL_ATRIBUTE:
+        fig = figure_model_atribute
 
     return fig
 
@@ -276,8 +289,6 @@ def result_prediction(n_clicks, RI, Na, Mg, Al, Si, K, Ca, Ba, Fe):
         return resultado
     else:
         prediction = trained_model.predict([[RI,Na,Mg,Al,Si,K,Ca,Ba,Fe]])[0]
-        predict_proba = trained_model.predict_proba([[RI,Na,Mg,Al,Si,K,Ca,Ba,Fe]])[0]
-        print(predict_proba)
         resultado='Resultado: Classe '+str(prediction)
     return resultado
 
